@@ -127,6 +127,15 @@ body::before {
     <h1>طلب nike zoom</h1>
 
     <form id="orderForm">
+      <!-- 👟 اختيار المقاس -->
+<label for="size">المقاس:</label>
+<select id="size" required>
+  <option value="">اختر المقاس</option>
+  <option value="41">41</option>
+  <option value="42">42</option>
+  <option value="43">43</option>
+  <option value="44">44</option>
+</select>
       <label for="firstName">الاسم:</label>
       <input type="text" id="firstName" required>
 
@@ -225,7 +234,7 @@ body::before {
         updateInv();
       };
 
-      function updateInv() {
+      function updateInv() {const size = document.getElementById("size").value;
         const fn = document.getElementById("firstName").value.trim(),
               ln = document.getElementById("lastName").value.trim(),
               ph = document.getElementById("phone").value.trim(),
@@ -233,6 +242,7 @@ body::before {
               total = qty * price + delivery + commune;
 
         invoice.innerHTML = `
+        المقاس: ${size || '---'}<br>
           <strong>📃 الفاتورة:</strong><br>
           الاسم: ${fn || '---'} ${ln || ''}<br>
           الهاتف: ${ph || '---'}<br>
@@ -248,11 +258,13 @@ body::before {
 
       document.getElementById("orderForm").addEventListener("submit", e => {
         e.preventDefault();
+        const size = document.getElementById("size").value;
         const fn = document.getElementById("firstName").value.trim(),
               ln = document.getElementById("lastName").value.trim(),
               ph = document.getElementById("phone").value.trim();
-        if (!fn || !ln || !ph || !wilaya.value) {
-          alert("❗ يرجى ملء جميع الحقول.");
+        if (!fn || !ln || !ph || !wl || !size) {
+  return alert("❗ يرجى ملء جميع الحقول واختيار المقاس.");
+    }
           return;
         }
         alert("✅ تم إرسال طلبك بنجاح!");
